@@ -1,0 +1,39 @@
+<!--- Dao Starter --->
+<!---Primeiro passo , defina a classe --->
+public class User {
+private String name , password ;
+// Construtores e setes / gets omitidos 
+}
+
+<!---Segundo passo , especificar a interface--->
+public interface UserDao{
+public void save (User user); <!-- quase igual a primeira parte do servlet-->
+public void delete (User user);
+public List list ();
+public User find (String Name);
+}
+
+<!-- aqui é o código para codificar o dao -->
+class JDBCUserDao implements UserDao {...}
+
+class HubernateUserDao implements UserDao {...}
+
+class TextFileUserDao implements UserDao{...}
+
+<!--DAO+Factory or DI(Dependency Injection)-->
+
+UserDao dao = new HibernateUserDao ();
+
+<!-- pattern Factory implementa Factory de objetos -->
+
+public class Factory {
+ public static UserDao createUserDao (){
+    return new HibernateUserDao ();
+ }
+}
+
+<!--O único lugar em toda a aplicação que conhece a implementação de DAO usada é aqui -->
+
+UserDao userDao = Factory.createUserDao ();
+<!--ao invés de instanciar com um new, chamaremos a fábrica-->
+
